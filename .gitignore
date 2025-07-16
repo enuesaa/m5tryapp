@@ -8,3 +8,6 @@
 .vscode/launch.json
 .vscode/ipch
 build
+
+# app
+src/secrets.h
