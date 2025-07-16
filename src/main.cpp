@@ -9,7 +9,8 @@
 void setup() {
   M5.begin();
   M5.Lcd.setTextSize(3);
-  M5.setTouchButtonHeight(32);
+  M5.setTouchButtonHeight(50);
+  M5.Display.fillRect(0, M5.Display.height() - 50, M5.Display.width() / 3, 50, BLUE);
 
   // M5.Lcd.print("start!");
 
@@ -45,12 +46,9 @@ void loop() {
   M5.delay(1);
   M5.update();
 
-  int w = M5.Display.width() / 5;
-  int h = M5.Display.height();
   M5.Display.startWrite();
-
   if (M5.BtnA.wasClicked()) {
-    M5.Display.fillRect(w*1, 0, w-1, h, TFT_RED);
+    M5.Display.fillRect(0, 0, 50, 50, TFT_RED);
   }
   M5.Display.endWrite();
 }
