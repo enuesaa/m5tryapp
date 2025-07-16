@@ -1,5 +1,6 @@
 #include <M5Unified.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
 #include "secrets.h"
 
 // https://takagi.blog/m5stack-wifi-get-local-ip-and-global-ip/
@@ -18,14 +19,23 @@ void setup() {
     retryCount++;
   }
 
-  if (WiFi.status() == WL_CONNECTED) {
-    M5.Lcd.print("connected");
-    WiFi.disconnect(true);
-  } else {
+  if (WiFi.status() != WL_CONNECTED) {
     M5.Lcd.print("failed");
-      M5.Lcd.print("status:");
-  M5.Lcd.println(WiFi.status());
+    M5.Lcd.print("status:");
+    M5.Lcd.println(WiFi.status());
+    return;
   }
+  M5.Lcd.print("connected");
+
+  HTTPClient http;
+    
+  http.begin("https://example.com/");
+  int statusCode = http.GET();
+  M5.Lcd.print("status:");
+  M5.Lcd.println(statusCode);
+
+  http.end();
+  WiFi.disconnect(true);
 }
 
 void loop() {}
