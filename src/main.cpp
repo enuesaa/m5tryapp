@@ -13,23 +13,24 @@ void setup() {
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
-  int retryCount = 0;
-  while (WiFi.status() != WL_CONNECTED && retryCount < 5) {
+  for (int i = 0; i < 5; i++) {
+    if (WiFi.status() == WL_CONNECTED) {
+      break;
+    }
     delay(500);
-    retryCount++;
   }
 
   if (WiFi.status() != WL_CONNECTED) {
-    M5.Lcd.print("failed");
-    M5.Lcd.print("status:");
+    M5.Lcd.print("failed. status is ");
     M5.Lcd.println(WiFi.status());
     return;
   }
-  M5.Lcd.print("connected");
-
+  M5.Lcd.print("connected. local ip is ");
+  M5.Lcd.println(WiFi.localIP());
+  
   HTTPClient http;
     
-  http.begin("https://example.com/");
+  http.begin("https://example.com/aaa");
   int statusCode = http.GET();
   M5.Lcd.print("status:");
   M5.Lcd.println(statusCode);
