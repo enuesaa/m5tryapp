@@ -1,5 +1,10 @@
 #pragma once
 
-void sendLogToInflux(const String& message);
-void monitor();
-void printMemoryStats();
+class MonitorInflux {
+private:
+    void postData(const String& payload);
+
+public:
+    void putLog(const String& message);
+    void sendMetrics();
+};

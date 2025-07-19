@@ -11,75 +11,73 @@
 // https://yamaccu.github.io/tils/20220808-M5Stack-JSON
 
 WebServer server(80);
+MonitorInflux influx;
 
 void handleRoot() {
-  IPAddress clientIP = server.client().remoteIP();
-  Serial.printf("[ACCESS] IP: %s  URI: /\n", clientIP.toString().c_str());
-  server.send(200, "text/plain", "hello!");
+    IPAddress clientIP = server.client().remoteIP();
+    Serial.printf("[ACCESS] IP: %s  URI: /\n", clientIP.toString().c_str());
+    server.send(200, "text/plain", "hello!");
 }
 
 void setup() {
-  Serial.begin(115200);
-  M5.begin();
-  M5.Lcd.setTextSize(3);
-  // M5.setTouchButtonHeight(50);
-  // M5.Display.fillRect(0, M5.Display.height() - 50, M5.Display.width() / 3, 50, BLUE);
+    Serial.begin(115200);
+    M5.begin();
+    M5.Lcd.setTextSize(3);
+    // M5.setTouchButtonHeight(50);
+    // M5.Display.fillRect(0, M5.Display.height() - 50, M5.Display.width() / 3, 50, BLUE);
 
-  Serial.println("start!");
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-  for (int i = 0; i < 5; i++) {
-    if (WiFi.status() == WL_CONNECTED) {
-      break;
+    for (int i = 0; i < 5; i++) {
+        if (WiFi.status() == WL_CONNECTED) {
+            break;
+        }
+        delay(500);
     }
-    delay(500);
-  }
 
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("failed. status is ");
-    Serial.println(WiFi.status());
-    return;
-  }
-  Serial.println("connected. local ip is ");
-  Serial.println(WiFi.localIP());
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("failed. status is ");
+        Serial.println(WiFi.status());
+        return;
+    }
+    Serial.println("connected. local ip is ");
+    Serial.println(WiFi.localIP());
 
-  sendLogToInflux("Hello from M5Stack!");
-  printMemoryStats();
+    influx.putLog("Hello from M5Stack!");
 
-  server.on("/", handleRoot);
-  server.begin();
-  M5.Lcd.println("server started");
+    server.on("/", handleRoot);
+    server.begin();
+    M5.Lcd.println("server started");
 
-  // HTTPClient http;
-    
-  // http.begin("https://example.com/aaa");
-  // int statusCode = http.GET();
-  // M5.Lcd.print("status:");
-  // M5.Lcd.println(statusCode);
+    // HTTPClient http;
+      
+    // http.begin("https://example.com/aaa");
+    // int statusCode = http.GET();
+    // M5.Lcd.print("status:");
+    // M5.Lcd.println(statusCode);
 
-  // http.end();
-  // WiFi.disconnect(true);
+    // http.end();
+    // WiFi.disconnect(true);
 }
 
 void loop() {
-  server.handleClient();
+    server.handleClient();
 
-  static unsigned long lastLog = 0;
-  unsigned long now = millis();
+    static unsigned long lastLog = 0;
+    unsigned long now = millis();
 
-  // 10000ms = 10秒
-  if (now - lastLog > 10000) {
-    lastLog = now;
-    monitor();
-  }
+    // 10000ms = 10秒
+    if (now - lastLog > 10000) {
+        lastLog = now;
+        influx.sendMetrics();
+    }
 
-  // M5.delay(1);
-  // M5.update();
+    // M5.delay(1);
+    // M5.update();
 
-  // M5.Display.startWrite();
-  // if (M5.BtnA.wasClicked()) {
-  //   M5.Display.fillRect(0, 0, 50, 50, TFT_RED);
-  // }
-  // M5.Display.endWrite();
+    // M5.Display.startWrite();
+    // if (M5.BtnA.wasClicked()) {
+    //   M5.Display.fillRect(0, 0, 50, 50, TFT_RED);
+    // }
+    // M5.Display.endWrite();
 }
