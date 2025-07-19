@@ -3,17 +3,12 @@
 #include "esp_heap_caps.h"
 #include "esp_system.h"
 #include "wifi.hpp"
+#include "server.hpp"
 #include "monitor.hpp"
 #include "utils/timer.hpp"
 
-WebServer server(80);
+WebServer* server;
 MonitorInflux influx;
-
-void handleRoot() {
-    IPAddress clientIP = server.client().remoteIP();
-    influx.putLog("[ACCESS] IP: %s  URI: /\n", clientIP.toString().c_str());
-    server.send(200, "text/plain", "hello!");
-}
 
 void setup() {
     M5.begin();
@@ -25,16 +20,17 @@ void setup() {
     }
     influx.putLog("connected");
 
-    server.on("/", handleRoot);
-    server.begin();
+    server = &setupServer(influx);
+    server->begin();
     M5.Lcd.println("server started");
 }
 
 Timer metricTimer(10000); // 10秒
 
 void loop() {
-    server.handleClient();
-
+    if (server) {
+        server->handleClient();
+    }
     if (metricTimer.isDue()) {
         influx.sendMetric();
     }
