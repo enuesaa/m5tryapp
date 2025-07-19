@@ -2,8 +2,8 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <WebServer.h>
-#include "secrets.h"
-#include "monitor.h"
+#include "secrets.hpp"
+#include "monitor.hpp"
 #include "esp_heap_caps.h"
 #include "esp_system.h"
 

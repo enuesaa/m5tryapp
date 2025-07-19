@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <HTTPClient.h>
-#include "monitor.h"
-#include "secrets.h"
+#include "monitor.hpp"
+#include "secrets.hpp"
 
 void monitor() {
   int heap = esp_get_free_heap_size();
