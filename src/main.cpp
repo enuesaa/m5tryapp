@@ -1,83 +1,41 @@
 #include <M5Unified.h>
-#include <WiFi.h>
-#include <HTTPClient.h>
 #include <WebServer.h>
-#include "secrets.hpp"
-#include "monitor.hpp"
 #include "esp_heap_caps.h"
 #include "esp_system.h"
-
-// https://takagi.blog/m5stack-wifi-get-local-ip-and-global-ip/
-// https://yamaccu.github.io/tils/20220808-M5Stack-JSON
+#include "wifi.hpp"
+#include "monitor.hpp"
+#include "utils/timer.hpp"
 
 WebServer server(80);
 MonitorInflux influx;
 
 void handleRoot() {
     IPAddress clientIP = server.client().remoteIP();
-    Serial.printf("[ACCESS] IP: %s  URI: /\n", clientIP.toString().c_str());
+    influx.putLog("[ACCESS] IP: %s  URI: /\n", clientIP.toString().c_str());
     server.send(200, "text/plain", "hello!");
 }
 
 void setup() {
-    Serial.begin(115200);
     M5.begin();
     M5.Lcd.setTextSize(3);
-    // M5.setTouchButtonHeight(50);
-    // M5.Display.fillRect(0, M5.Display.height() - 50, M5.Display.width() / 3, 50, BLUE);
 
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-    for (int i = 0; i < 5; i++) {
-        if (WiFi.status() == WL_CONNECTED) {
-            break;
-        }
-        delay(500);
-    }
-
-    if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("failed. status is ");
-        Serial.println(WiFi.status());
+    if (!connectToWiFi()) {
+        M5.Lcd.println("failed to connect to the wifi");
         return;
     }
-    Serial.println("connected. local ip is ");
-    Serial.println(WiFi.localIP());
-
-    influx.putLog("Hello from M5Stack!");
+    influx.putLog("connected");
 
     server.on("/", handleRoot);
     server.begin();
     M5.Lcd.println("server started");
-
-    // HTTPClient http;
-      
-    // http.begin("https://example.com/aaa");
-    // int statusCode = http.GET();
-    // M5.Lcd.print("status:");
-    // M5.Lcd.println(statusCode);
-
-    // http.end();
-    // WiFi.disconnect(true);
 }
+
+Timer metricTimer(10000); // 10秒
 
 void loop() {
     server.handleClient();
 
-    static unsigned long lastLog = 0;
-    unsigned long now = millis();
-
-    // 10000ms = 10秒
-    if (now - lastLog > 10000) {
-        lastLog = now;
-        influx.sendMetrics();
+    if (metricTimer.isDue()) {
+        influx.sendMetric();
     }
-
-    // M5.delay(1);
-    // M5.update();
-
-    // M5.Display.startWrite();
-    // if (M5.BtnA.wasClicked()) {
-    //   M5.Display.fillRect(0, 0, 50, 50, TFT_RED);
-    // }
-    // M5.Display.endWrite();
 }
