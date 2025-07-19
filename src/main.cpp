@@ -14,12 +14,13 @@ void handleRoot() {
 }
 
 void setup() {
+  Serial.begin(115200);
   M5.begin();
   M5.Lcd.setTextSize(3);
   // M5.setTouchButtonHeight(50);
   // M5.Display.fillRect(0, M5.Display.height() - 50, M5.Display.width() / 3, 50, BLUE);
 
-  M5.Lcd.print("start!");
+  Serial.println("start!");
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
@@ -31,12 +32,12 @@ void setup() {
   }
 
   if (WiFi.status() != WL_CONNECTED) {
-    M5.Lcd.print("failed. status is ");
-    M5.Lcd.println(WiFi.status());
+    Serial.println("failed. status is ");
+    Serial.println(WiFi.status());
     return;
   }
-  M5.Lcd.print("connected. local ip is ");
-  M5.Lcd.println(WiFi.localIP());
+  Serial.println("connected. local ip is ");
+  Serial.println(WiFi.localIP());
 
   server.on("/", handleRoot);
   server.begin();
