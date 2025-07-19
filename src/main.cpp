@@ -12,6 +12,8 @@
 WebServer server(80);
 
 void handleRoot() {
+  IPAddress clientIP = server.client().remoteIP();
+  Serial.printf("[ACCESS] IP: %s  URI: /\n", clientIP.toString().c_str());
   server.send(200, "text/plain", "hello!");
 }
 
@@ -68,7 +70,16 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient();  // クライアントからのリクエスト処理
+  server.handleClient();
+
+  // static unsigned long lastLog = 0;
+  // unsigned long now = millis();
+
+  // // 10000ms = 10秒
+  // if (now - lastLog > 10000) {
+  //   lastLog = now;
+  //   printMemoryStats();
+  // }
 
   // M5.delay(1);
   // M5.update();
