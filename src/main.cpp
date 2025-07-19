@@ -72,14 +72,14 @@ void setup() {
 void loop() {
   server.handleClient();
 
-  // static unsigned long lastLog = 0;
-  // unsigned long now = millis();
+  static unsigned long lastLog = 0;
+  unsigned long now = millis();
 
-  // // 10000ms = 10秒
-  // if (now - lastLog > 10000) {
-  //   lastLog = now;
-  //   printMemoryStats();
-  // }
+  // 10000ms = 10秒
+  if (now - lastLog > 10000) {
+    lastLog = now;
+    printMemoryStats();
+  }
 
   // M5.delay(1);
   // M5.update();
