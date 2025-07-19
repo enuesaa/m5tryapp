@@ -3,6 +3,8 @@
 #include <HTTPClient.h>
 #include <WebServer.h>
 #include "secrets.h"
+#include "esp_heap_caps.h"
+#include "esp_system.h"
 
 // https://takagi.blog/m5stack-wifi-get-local-ip-and-global-ip/
 // https://yamaccu.github.io/tils/20220808-M5Stack-JSON
@@ -11,6 +13,15 @@ WebServer server(80);
 
 void handleRoot() {
   server.send(200, "text/plain", "hello!");
+}
+
+void printMemoryStats() {
+  Serial.println("===== Memory Info =====");
+  Serial.printf("Free Heap:                %d bytes\n", esp_get_free_heap_size());
+  Serial.printf("Min Ever Free Heap:       %d bytes\n", esp_get_minimum_free_heap_size());
+  Serial.printf("Largest Free Block:       %d bytes\n", heap_caps_get_largest_free_block(MALLOC_CAP_DEFAULT));
+  Serial.printf("Free PSRAM (if enabled):  %d bytes\n", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+  Serial.println("========================\n");
 }
 
 void setup() {
@@ -38,6 +49,8 @@ void setup() {
   }
   Serial.println("connected. local ip is ");
   Serial.println(WiFi.localIP());
+
+  printMemoryStats();
 
   server.on("/", handleRoot);
   server.begin();
