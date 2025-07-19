@@ -44,6 +44,7 @@ void setup() {
   Serial.println("connected. local ip is ");
   Serial.println(WiFi.localIP());
 
+  sendLogToInflux("Hello from M5Stack!");
   printMemoryStats();
 
   server.on("/", handleRoot);

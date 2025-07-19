@@ -2,6 +2,18 @@
 #include <HTTPClient.h>
 #include "monitor.hpp"
 #include "secrets.hpp"
+void sendLogToInflux(const String& message) {
+  HTTPClient http;
+  http.begin(INFLUX_URL);
+  http.addHeader("Authorization", "Token m5tryapp");
+  http.addHeader("Content-Type", "text/plain");
+
+  String payload = "m5log,device=m5cores3 level=\"info\",message=\"" + message + "\"";
+  int status = http.POST(payload);
+  Serial.printf("[Influx] Status: %d\n", status);
+
+  http.end();
+}
 
 void monitor() {
   int heap = esp_get_free_heap_size();
