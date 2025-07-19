@@ -26,6 +26,23 @@ void printMemoryStats() {
   Serial.println("========================\n");
 }
 
+void monitor() {
+  int heap = esp_get_free_heap_size();
+
+  HTTPClient http;
+  http.begin(INFLUX_URL);
+  http.addHeader("Authorization", "Token m5tryapp");
+  http.addHeader("Content-Type", "text/plain");
+
+  // Line protocol: <measurement>,<tag>=<value> field=value
+  String payload = "mem,device=m5stack heap_free=" + String(heap);
+
+  int status = http.POST(payload);
+  Serial.printf("[Influx] Status: %d\n", status);
+
+  http.end();
+}
+
 void setup() {
   Serial.begin(115200);
   M5.begin();
@@ -78,7 +95,7 @@ void loop() {
   // 10000ms = 10秒
   if (now - lastLog > 10000) {
     lastLog = now;
-    printMemoryStats();
+    monitor();
   }
 
   // M5.delay(1);

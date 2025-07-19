@@ -1,0 +1,21 @@
+services:
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - 8086:8086
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=m5tryapp
+      - DOCKER_INFLUXDB_INIT_BUCKET=m5tryapp
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=m5tryapp
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    depends_on:
+      - influxdb
