@@ -7,7 +7,6 @@
 #include "monitor.hpp"
 #include "http.hpp"
 #include "utils/timer.hpp"
-#include <SPIFFS.h>
 
 WebServer* server;
 MonitorInflux influx;
@@ -27,29 +26,6 @@ void setup() {
     M5.Lcd.println("server started");
 
     callhttp();
-
-
-
-    if (!SPIFFS.begin(true)) {
-        M5.Lcd.println("SPIFFS Mount Failed");
-        return;
-    }
-    File root = SPIFFS.open("/");
-
-    if (!root || !root.isDirectory()) {
-        M5.Lcd.println("Failed to open");
-        return;
-    }
-
-    File file = root.openNextFile();
-    while (file) {
-        M5.Lcd.print(file.name());
-        M5.Lcd.print(",");
-        file = root.openNextFile();
-    }
-        SPIFFS.remove("/test.txt");
-        SPIFFS.remove("/testaa.txt");
-
 }
 
 Timer metricTimer(10000); // 10秒
