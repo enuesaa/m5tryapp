@@ -50,10 +50,15 @@ void callhttp() {
     uint8_t* buf = new uint8_t[size];
     file2.read(buf, size);
     file2.close();
+
+    M5.Lcd.println(M5.Speaker.getVolume());
+    M5.Speaker.setVolume(70);
+
     M5.Speaker.playWav(buf, size);
 
     // see https://zenn.dev/nnn112358/scraps/b3f36dd799e68a
     while (M5.Speaker.isPlaying()) {
         delay(1);
     }
+    M5.Lcd.println("speech end");
 }
