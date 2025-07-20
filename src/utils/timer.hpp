@@ -1,11 +1,11 @@
 #pragma once
 
 class Timer {
-public:
+   public:
     Timer(unsigned long interval);
     bool isDue();
 
-private:
+   private:
     unsigned long interval;
     unsigned long lastRun;
 };

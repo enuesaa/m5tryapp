@@ -1,6 +1,8 @@
-#include <HTTPClient.h>
-#include "esp_heap_caps.h"
 #include "monitor.hpp"
+
+#include <HTTPClient.h>
+
+#include "esp_heap_caps.h"
 #include "secrets.hpp"
 
 bool MonitorInflux::connected = true;

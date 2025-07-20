@@ -1,9 +1,11 @@
-#include <M5Unified.h>
+#include "openai.hpp"
+
 #include <HTTPClient.h>
+#include <M5Unified.h>
+#include <SPIFFS.h>
+
 #include "esp_heap_caps.h"
 #include "secrets.hpp"
-#include "openai.hpp"
-#include <SPIFFS.h>
 
 // see https://zenn.dev/nnn112358/scraps/b3f36dd799e68a
 void speech(const String& text) {
@@ -21,12 +23,7 @@ void speech(const String& text) {
     http.addHeader("Authorization", "Bearer " + String(OPENAI_APIKEY));
     http.addHeader("Content-Type", "application/json");
 
-    String payload = String("{")
-        + "\"model\": \"gpt-4o-mini-tts\","
-        + "\"input\": \"" + text + "\","
-        + "\"voice\": \"shimmer\","
-        + "\"response_format\": \"wav\""
-        + "}";
+    String payload = String("{") + "\"model\": \"gpt-4o-mini-tts\"," + "\"input\": \"" + text + "\"," + "\"voice\": \"shimmer\"," + "\"response_format\": \"wav\"" + "}";
 
     int status = http.POST(payload);
     if (status != 200) {

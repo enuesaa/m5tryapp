@@ -1,14 +1,15 @@
 #include <M5Unified.h>
 #include <WebServer.h>
+
 #include "esp_heap_caps.h"
 #include "esp_system.h"
-#include "wifi.hpp"
-#include "server.hpp"
 #include "monitor.hpp"
 #include "openai.hpp"
+#include "server.hpp"
 #include "utils/timer.hpp"
+#include "wifi.hpp"
 
-WebServer* server;
+WebServer *server;
 MonitorInflux influx;
 
 void setup() {
@@ -28,7 +29,7 @@ void setup() {
     speech("こんにちは");
 }
 
-Timer metricTimer(10000); // 10秒
+Timer metricTimer(10000);  // 10秒
 
 void loop() {
     if (server) {

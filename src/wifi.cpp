@@ -1,5 +1,7 @@
-#include <WiFi.h>
 #include "wifi.hpp"
+
+#include <WiFi.h>
+
 #include "secrets.hpp"
 
 bool connectToWiFi() {

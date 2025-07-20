@@ -1,8 +1,8 @@
-#include <M5Unified.h>
 #include "timer.hpp"
 
-Timer::Timer(unsigned long interval)
-    : interval(interval), lastRun(0) {}
+#include <M5Unified.h>
+
+Timer::Timer(unsigned long interval) : interval(interval), lastRun(0) {}
 
 bool Timer::isDue() {
     unsigned long now = millis();
