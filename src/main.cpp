@@ -13,7 +13,8 @@ WebServer *server;
 MonitorInflux influx;
 
 void setup() {
-    M5.begin();
+    auto cfg = M5.config();
+    M5.begin(cfg);
     M5.Lcd.setTextSize(3);
 
     if (!connectToWiFi()) {
