@@ -6,6 +6,7 @@
 #include "server.hpp"
 #include "monitor.hpp"
 #include "utils/timer.hpp"
+#include <SPIFFS.h>
 
 WebServer* server;
 MonitorInflux influx;
@@ -23,6 +24,24 @@ void setup() {
     server = &setupServer(influx);
     server->begin();
     M5.Lcd.println("server started");
+
+
+
+    if (!SPIFFS.begin(true)) {
+        M5.Lcd.println("SPIFFS Mount Failed");
+        return;
+    }
+
+    if (SPIFFS.exists("/testaa.txt")) {
+        M5.Lcd.println("File exists!");
+    } else {
+        M5.Lcd.println("File not exists!");
+        File file = SPIFFS.open("/testaa.txt", FILE_WRITE);
+        if (file) {
+            file.print("a");
+            file.close();
+        }
+    }
 }
 
 Timer metricTimer(10000); // 10秒
