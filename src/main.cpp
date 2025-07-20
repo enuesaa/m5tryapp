@@ -5,7 +5,7 @@
 #include "wifi.hpp"
 #include "server.hpp"
 #include "monitor.hpp"
-#include "http.hpp"
+#include "openai.hpp"
 #include "utils/timer.hpp"
 
 WebServer* server;
@@ -25,7 +25,7 @@ void setup() {
     server->begin();
     M5.Lcd.println("server started");
 
-    callhttp();
+    speech("こんにちは");
 }
 
 Timer metricTimer(10000); // 10秒
