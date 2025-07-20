@@ -31,17 +31,22 @@ void setup() {
         M5.Lcd.println("SPIFFS Mount Failed");
         return;
     }
+    File root = SPIFFS.open("/");
 
-    if (SPIFFS.exists("/testaa.txt")) {
-        M5.Lcd.println("File exists!");
-    } else {
-        M5.Lcd.println("File not exists!");
-        File file = SPIFFS.open("/testaa.txt", FILE_WRITE);
-        if (file) {
-            file.print("a");
-            file.close();
-        }
+    if (!root || !root.isDirectory()) {
+        M5.Lcd.println("Failed to open");
+        return;
     }
+
+    File file = root.openNextFile();
+    while (file) {
+        M5.Lcd.print(file.name());
+        M5.Lcd.print(",");
+        file = root.openNextFile();
+    }
+        SPIFFS.remove("/test.txt");
+        SPIFFS.remove("/testaa.txt");
+
 }
 
 Timer metricTimer(10000); // 10秒
