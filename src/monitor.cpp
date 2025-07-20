@@ -3,14 +3,20 @@
 #include "monitor.hpp"
 #include "secrets.hpp"
 
+bool MonitorInflux::connected = true;
+
 void MonitorInflux::postData(const String& payload) {
+    if (connected == false) {
+        return;
+    }
+
     HTTPClient http;
     http.begin(INFLUX_URL);
     http.addHeader("Authorization", "Token m5tryapp");
     http.addHeader("Content-Type", "text/plain");
 
     int status = http.POST(payload);
-    Serial.printf("[MonitorInflux] Status: %d\n", status);
+    connected = status == 204;
 
     http.end();
 }
