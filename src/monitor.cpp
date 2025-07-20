@@ -7,7 +7,7 @@
 
 bool MonitorInflux::connected = true;
 
-void MonitorInflux::postData(const String& payload) {
+void MonitorInflux::postData(const String &payload) {
     if (connected == false) {
         return;
     }
@@ -23,7 +23,7 @@ void MonitorInflux::postData(const String& payload) {
     http.end();
 }
 
-void MonitorInflux::putLog(const char* format, ...) {
+void MonitorInflux::putLog(const char *format, ...) {
     char buf[256];
     va_list args;
     va_start(args, format);

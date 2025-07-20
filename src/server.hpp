@@ -4,4 +4,4 @@
 
 #include "monitor.hpp"
 
-WebServer& setupServer(MonitorInflux& influx);
+WebServer &setupServer(MonitorInflux &influx);

@@ -8,7 +8,7 @@
 #include "secrets.hpp"
 
 // see https://zenn.dev/nnn112358/scraps/b3f36dd799e68a
-void speech(const String& text) {
+void speech(const String &text) {
     // setup
     if (!SPIFFS.begin(true)) {
         M5.Lcd.println("SPIFFS Mount Failed");
@@ -44,7 +44,7 @@ void speech(const String& text) {
         return;
     }
     size_t size = file2.size();
-    uint8_t* buf = new uint8_t[size];
+    uint8_t *buf = new uint8_t[size];
     file2.read(buf, size);
     file2.close();
 

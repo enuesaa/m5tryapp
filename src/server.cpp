@@ -1,7 +1,7 @@
 #include "server.hpp"
 
 static WebServer server(80);
-static MonitorInflux* monitor = nullptr;
+static MonitorInflux *monitor = nullptr;
 
 void handleRoot() {
     IPAddress clientIP = server.client().remoteIP();
@@ -9,7 +9,7 @@ void handleRoot() {
     server.send(200, "text/plain", "hello!");
 }
 
-WebServer& setupServer(MonitorInflux& influx) {
+WebServer &setupServer(MonitorInflux &influx) {
     monitor = &influx;
     server.on("/", handleRoot);
 

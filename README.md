@@ -17,3 +17,8 @@ M5Stack の機種によってライブラリが異なっていたがそれを統
 
 - https://speakerdeck.com/lovyan03/m5unifiednoshao-jie
 - https://lang-ship.com/blog/work/m5unified-1/
+
+### format
+```bash
+clang-format -i src/**/*.{cpp,hpp}
+```

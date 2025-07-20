@@ -1,11 +1,11 @@
 #pragma once
 
 class MonitorInflux {
-   private:
-    void postData(const String& payload);
+  private:
+    void postData(const String &payload);
     static bool connected;
 
-   public:
-    void putLog(const char* format, ...);
+  public:
+    void putLog(const char *format, ...);
     void sendMetric();
 };

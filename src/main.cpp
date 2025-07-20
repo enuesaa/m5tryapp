@@ -29,7 +29,7 @@ void setup() {
     speech("こんにちは");
 }
 
-Timer metricTimer(10000);  // 10秒
+Timer metricTimer(10000); // 10秒
 
 void loop() {
     if (server) {
