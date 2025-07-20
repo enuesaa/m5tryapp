@@ -10,12 +10,6 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=m5tryapp
       - DOCKER_INFLUXDB_INIT_BUCKET=m5tryapp
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=m5tryapp
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=password
-    depends_on:
-      - influxdb
+    volumes:
+      - ./dashboard.json:/dashboard.json
+    command: /entrypoint.sh && bash init.sh
