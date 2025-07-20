@@ -5,6 +5,7 @@
 #include "wifi.hpp"
 #include "server.hpp"
 #include "monitor.hpp"
+#include "http.hpp"
 #include "utils/timer.hpp"
 #include <SPIFFS.h>
 
@@ -24,6 +25,8 @@ void setup() {
     server = &setupServer(influx);
     server->begin();
     M5.Lcd.println("server started");
+
+    callhttp();
 
 
 
