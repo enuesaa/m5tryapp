@@ -1,17 +1,18 @@
-#include "monitor.hpp"
+#include "influx.hpp"
 
 #include <HTTPClient.h>
 #include <M5Unified.h>
-
 #include "env/vars.hpp"
 #include "esp_heap_caps.h"
 
-bool MonitorInflux::connected = true;
+namespace monitor::influx {
 
-void MonitorInflux::postData(const String &payload) {
-    if (connected == false) {
-        return;
-    }
+namespace {
+  bool connected = true;
+}
+
+void postData(const String& payload) {
+    if (!connected) return;
 
     HTTPClient http;
     http.begin(env::vars::INFLUX_URL);
@@ -19,12 +20,12 @@ void MonitorInflux::postData(const String &payload) {
     http.addHeader("Content-Type", "text/plain");
 
     int status = http.POST(payload);
-    connected = status == 204;
+    connected = (status == 204);
 
     http.end();
 }
 
-void MonitorInflux::putLog(const char *format, ...) {
+void putLog(const char* format, ...) {
     char buf[256];
     va_list args;
     va_start(args, format);
@@ -35,8 +36,10 @@ void MonitorInflux::putLog(const char *format, ...) {
     postData(payload);
 }
 
-void MonitorInflux::sendMetric() {
+void sendMetric() {
     int heap = esp_get_free_heap_size();
     String payload = "mem,device=m5stack heap_free=" + String(heap);
     postData(payload);
 }
+
+}  // namespace monitor::influx

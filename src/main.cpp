@@ -3,14 +3,13 @@
 
 #include "esp_heap_caps.h"
 #include "esp_system.h"
-#include "monitor.hpp"
+#include "monitor/influx.hpp"
 #include "rss.hpp"
 #include "server.hpp"
 #include "utils/timer.hpp"
 #include "wifi.hpp"
 
 WebServer *server;
-MonitorInflux influx;
 
 void setup() {
     auto cfg = M5.config();
@@ -21,9 +20,9 @@ void setup() {
         M5.Lcd.println("failed to connect to the wifi");
         return;
     }
-    influx.putLog("connected");
+    monitor::influx::putLog("connected");
 
-    server = &setupServer(influx);
+    server = &setupServer();
     server->begin();
     M5.Lcd.println("server started");
 
@@ -37,6 +36,6 @@ void loop() {
         server->handleClient();
     }
     if (metricTimer.isDue()) {
-        influx.sendMetric();
+        monitor::influx::sendMetric();
     }
 }

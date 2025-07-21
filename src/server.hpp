@@ -2,6 +2,4 @@
 
 #include <WebServer.h>
 
-#include "monitor.hpp"
-
-WebServer &setupServer(MonitorInflux &influx);
+WebServer &setupServer();
