@@ -8,6 +8,7 @@
 #include "server.hpp"
 #include "utils/timer.hpp"
 #include "wifi.hpp"
+#include "rss.hpp"
 
 WebServer *server;
 MonitorInflux influx;
@@ -27,7 +28,8 @@ void setup() {
     server->begin();
     M5.Lcd.println("server started");
 
-    speech("こんにちは");
+    parseRSSFeed();
+    // speech("こんにちは");
 }
 
 Timer metricTimer(10000); // 10秒
