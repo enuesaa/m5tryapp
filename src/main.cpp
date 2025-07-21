@@ -16,6 +16,7 @@ MonitorInflux influx;
 void setup() {
     auto cfg = M5.config();
     M5.begin(cfg);
+    M5.Lcd.setTextFont(&fonts::efontJA_16);
     M5.Lcd.setTextSize(3);
 
     if (!connectToWiFi()) {
