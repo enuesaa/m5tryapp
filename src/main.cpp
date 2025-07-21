@@ -1,11 +1,10 @@
 #include <M5Unified.h>
 #include <WebServer.h>
 
-#include "esp_heap_caps.h"
-#include "esp_system.h"
 #include "monitor/influx.hpp"
 #include "env/runtime.hpp"
 #include "utils/timer.hpp"
+#include "app/rss.hpp"
 
 namespace influx = monitor::influx;
 namespace timer = utils::timer;
@@ -13,12 +12,12 @@ namespace runtime = env::runtime;
 
 void setup() {
     if (!runtime::configure()) {
-        M5.Lcd.println("failed to connect to the network");
+        M5.Lcd.println("failed to configure");
         return;
     }
     influx::putLog("connected");
 
-    // parseRSSFeed();
+    app::rss::parse();
 }
 
 timer::Timer metricTimer(10000); // 10秒

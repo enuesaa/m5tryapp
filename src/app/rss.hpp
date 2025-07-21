@@ -1,3 +1,5 @@
 #pragma once
 
-void parseRSSFeed();
+namespace app::rss {
+    void parse();
+}; // namespace utils::htmlentities
