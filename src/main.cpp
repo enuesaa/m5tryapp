@@ -4,7 +4,6 @@
 #include "esp_heap_caps.h"
 #include "esp_system.h"
 #include "monitor.hpp"
-#include "openai.hpp"
 #include "server.hpp"
 #include "utils/timer.hpp"
 #include "wifi.hpp"
@@ -29,7 +28,6 @@ void setup() {
     M5.Lcd.println("server started");
 
     parseRSSFeed();
-    // speech("こんにちは");
 }
 
 Timer metricTimer(10000); // 10秒

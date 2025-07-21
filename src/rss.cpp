@@ -2,6 +2,7 @@
 #include <M5Unified.h>
 #include "rss.hpp"
 #include "secrets.hpp"
+#include "openai.hpp"
 
 void parseRSSFeed() {
     HTTPClient http;
@@ -19,6 +20,7 @@ void parseRSSFeed() {
     const String tagStart = "<title>";
     const String tagEnd = "</title>";
     int cursor = 0;
+    int count = 0;
 
     while (true) {
         int startIdx = payload.indexOf(tagStart, cursor);
@@ -29,12 +31,22 @@ void parseRSSFeed() {
         if (endIdx == -1) {
             break;
         }
+        if (count == 0) {
+            count += 1;
+            continue;
+        }
+        count += 1;
+
         String title = payload.substring(startIdx + tagStart.length(), endIdx);
         M5.Lcd.println(1);
         M5.Lcd.println(decodeHTMLEntities(title));
+        speech(decodeHTMLEntities(title));
 
         cursor = endIdx + tagEnd.length();
-        break;
+
+        if (count > 5) {
+            break;
+        }
     }
 }
 
