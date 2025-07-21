@@ -4,28 +4,21 @@
 #include "esp_heap_caps.h"
 #include "esp_system.h"
 #include "monitor/influx.hpp"
-#include "network/wifi.hpp"
-#include "rss.hpp"
+#include "env/runtime.hpp"
 #include "utils/timer.hpp"
 
 namespace influx = monitor::influx;
-namespace wifi = network::wifi;
 namespace timer = utils::timer;
-
-WebServer *server;
+namespace runtime = env::runtime;
 
 void setup() {
-    auto cfg = M5.config();
-    M5.begin(cfg);
-    M5.Lcd.setFont(&fonts::efontJA_24);
-
-    if (!wifi::connect()) {
-        M5.Lcd.println("failed to connect to the wifi");
+    if (!runtime::configure()) {
+        M5.Lcd.println("failed to connect to the network");
         return;
     }
     influx::putLog("connected");
 
-    parseRSSFeed();
+    // parseRSSFeed();
 }
 
 timer::Timer metricTimer(10000); // 10秒

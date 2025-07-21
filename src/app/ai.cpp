@@ -1,4 +1,4 @@
-#include "openai.hpp"
+#include "ai.hpp"
 
 #include <HTTPClient.h>
 #include <M5Unified.h>
@@ -7,16 +7,7 @@
 #include "env/vars.hpp"
 #include "esp_heap_caps.h"
 
-// see https://zenn.dev/nnn112358/scraps/b3f36dd799e68a
 void speech(const String &text) {
-    // setup
-    if (!SPIFFS.begin(true)) {
-        M5.Lcd.println("SPIFFS Mount Failed");
-        return;
-    }
-    M5.Speaker.setVolume(70);
-
-    // main logic
     HTTPClient http;
 
     http.begin("https://api.openai.com/v1/audio/speech");
