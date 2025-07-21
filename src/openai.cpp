@@ -4,8 +4,8 @@
 #include <M5Unified.h>
 #include <SPIFFS.h>
 
+#include "env/vars.hpp"
 #include "esp_heap_caps.h"
-#include "secrets.hpp"
 
 // see https://zenn.dev/nnn112358/scraps/b3f36dd799e68a
 void speech(const String &text) {
@@ -20,7 +20,7 @@ void speech(const String &text) {
     HTTPClient http;
 
     http.begin("https://api.openai.com/v1/audio/speech");
-    http.addHeader("Authorization", "Bearer " + String(OPENAI_APIKEY));
+    http.addHeader("Authorization", "Bearer " + String(env::vars::OPENAI_APIKEY));
     http.addHeader("Content-Type", "application/json");
 
     String payload = String("{") + "\"model\": \"gpt-4o-mini-tts\"," + "\"input\": \"" + text + "\"," + "\"voice\": \"shimmer\"," + "\"response_format\": \"wav\"" + "}";

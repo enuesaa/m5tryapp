@@ -1,13 +1,13 @@
 #include "rss.hpp"
+#include "env/vars.hpp"
 #include "openai.hpp"
-#include "secrets.hpp"
 #include "utils/htmlentities.hpp"
 #include <HTTPClient.h>
 #include <M5Unified.h>
 
 void parseRSSFeed() {
     HTTPClient http;
-    http.begin(RSS_FEED_URI);
+    http.begin(env::vars::RSS_FEED_URI);
 
     int code = http.GET();
     if (code != 200) {

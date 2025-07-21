@@ -2,10 +2,10 @@
 
 #include <WiFi.h>
 
-#include "secrets.hpp"
+#include "env/vars.hpp"
 
 bool connectToWiFi() {
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.begin(env::vars::WIFI_SSID, env::vars::WIFI_PASSWORD);
     for (int i = 0; i < 5; ++i) {
         if (WiFi.status() == WL_CONNECTED) {
             return true;

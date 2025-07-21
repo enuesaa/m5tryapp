@@ -11,3 +11,4 @@ build
 
 # app
 src/secrets.hpp
+src/env/vars.hpp

@@ -3,8 +3,8 @@
 #include <HTTPClient.h>
 #include <M5Unified.h>
 
+#include "env/vars.hpp"
 #include "esp_heap_caps.h"
-#include "secrets.hpp"
 
 bool MonitorInflux::connected = true;
 
@@ -14,7 +14,7 @@ void MonitorInflux::postData(const String &payload) {
     }
 
     HTTPClient http;
-    http.begin(INFLUX_URL);
+    http.begin(env::vars::INFLUX_URL);
     http.addHeader("Authorization", "Token m5tryapp");
     http.addHeader("Content-Type", "text/plain");
 
