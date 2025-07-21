@@ -15,4 +15,4 @@ jobs:
           python-version: 3.12
 
       - run: pip install platformio
-      - run: platformio run
+      - run: pio run
