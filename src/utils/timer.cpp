@@ -2,6 +2,7 @@
 
 #include <M5Unified.h>
 
+namespace utils::timer {
 Timer::Timer(unsigned long interval) : interval(interval), lastRun(0) {}
 
 bool Timer::isDue() {
@@ -12,3 +13,5 @@ bool Timer::isDue() {
     }
     return false;
 }
+
+}; // namespace utils::timer

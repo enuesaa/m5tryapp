@@ -1,8 +1,8 @@
+#include "rss.hpp"
+#include "openai.hpp"
+#include "secrets.hpp"
 #include <HTTPClient.h>
 #include <M5Unified.h>
-#include "rss.hpp"
-#include "secrets.hpp"
-#include "openai.hpp"
 
 void parseRSSFeed() {
     HTTPClient http;
@@ -50,11 +50,11 @@ void parseRSSFeed() {
     }
 }
 
-String decodeHTMLEntities(const String& input) {
+String decodeHTMLEntities(const String &input) {
     String output;
     int len = input.length();
 
-    for (int i = 0; i < len; ) {
+    for (int i = 0; i < len;) {
         if (input[i] == '&' && i + 3 < len && input[i + 1] == '#' && input[i + 2] == 'x') {
             int semi = input.indexOf(';', i);
             if (semi != -1) {

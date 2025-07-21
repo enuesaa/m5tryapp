@@ -4,10 +4,10 @@
 #include "esp_heap_caps.h"
 #include "esp_system.h"
 #include "monitor.hpp"
+#include "rss.hpp"
 #include "server.hpp"
 #include "utils/timer.hpp"
 #include "wifi.hpp"
-#include "rss.hpp"
 
 WebServer *server;
 MonitorInflux influx;
@@ -30,7 +30,7 @@ void setup() {
     parseRSSFeed();
 }
 
-Timer metricTimer(10000); // 10秒
+utils::timer::Timer metricTimer(10000); // 10秒
 
 void loop() {
     if (server) {

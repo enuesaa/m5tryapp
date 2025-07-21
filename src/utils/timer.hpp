@@ -1,5 +1,6 @@
 #pragma once
 
+namespace utils::timer {
 class Timer {
   public:
     Timer(unsigned long interval);
@@ -9,3 +10,4 @@ class Timer {
     unsigned long interval;
     unsigned long lastRun;
 };
+}; // namespace utils::timer
