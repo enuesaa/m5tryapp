@@ -14,4 +14,4 @@ namespace network::wifi {
         }
         return false;
     };
-};
+}; // namespace network::wifi

@@ -3,4 +3,4 @@
 
 namespace network::wifi {
     bool connect();
-}; // namespace utils::htmlentities
+}; // namespace network::wifi
