@@ -16,8 +16,8 @@ namespace env::runtime {
         }
         if (!network::connect()) {
             M5.Lcd.println("failed to connect to the network");
-            return false;   
+            return false;
         }
         return true;
     };
-};
+}; // namespace env::runtime

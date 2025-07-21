@@ -2,4 +2,4 @@
 
 namespace app::rss {
     void parse();
-}; // namespace utils::htmlentities
+}; // namespace app::rss

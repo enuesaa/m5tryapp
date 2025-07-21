@@ -50,4 +50,4 @@ namespace app::ai {
         }
         return;
     }
-};
+}; // namespace app::ai

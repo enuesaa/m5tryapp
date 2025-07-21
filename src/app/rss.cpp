@@ -1,6 +1,6 @@
 #include "rss.hpp"
-#include "env/vars.hpp"
 #include "app/ai.hpp"
+#include "env/vars.hpp"
 #include "utils/htmlentities.hpp"
 #include <HTTPClient.h>
 #include <M5Unified.h>
@@ -49,4 +49,4 @@ namespace app::rss {
             }
         }
     }
-};
+}; // namespace app::rss

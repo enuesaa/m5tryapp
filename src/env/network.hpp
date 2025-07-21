@@ -3,4 +3,4 @@
 
 namespace env::network {
     bool connect();
-}; // namespace network::wifi
+}; // namespace env::network

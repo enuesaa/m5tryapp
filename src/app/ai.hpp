@@ -3,4 +3,4 @@
 
 namespace app::ai {
     void speech(const String &text);
-}; // namespace utils::htmlentities
+}; // namespace app::ai
