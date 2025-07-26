@@ -1,5 +1,5 @@
 #include <M5Unified.h>
-#include <RssParse.hpp>
+#include <Rss.hpp>
 #include <WebServer.h>
 
 #include "app/rss.hpp"
@@ -12,8 +12,6 @@ namespace timer = utils::timer;
 namespace runtime = env::runtime;
 
 void setup() {
-    hello();
-
     if (!runtime::configure()) {
         M5.Lcd.println("failed to configure");
         return;

@@ -2,7 +2,7 @@
 #include <HTTPClient.h>
 #include <M5Unified.h>
 
-namespace app::rss {
+namespace rss {
     String fetch(const String& url) {
         HTTPClient http;
         http.begin(url);
