@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <unity.h>
-#include <Rss.hpp>
+#include <Rss.h>
 
 void test_extract() {
     String xml =
