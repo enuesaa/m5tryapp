@@ -1,5 +1,6 @@
 #include "feed.hpp"
 #include "env/vars.hpp"
+#include "services/ai.hpp"
 #include <HTTPClient.h>
 #include <M5Unified.h>
 #include <Rss.h>
@@ -19,7 +20,7 @@ namespace services::feed {
 
         String body = http.getString();
 
-        StaticJsonDocument<1024> doc;
+        JsonDocument doc;
         DeserializationError error = deserializeJson(doc, body);
 
         if (error) {
@@ -27,8 +28,12 @@ namespace services::feed {
             return;
         }
 
-        const char* url = doc["feed"]["url"]; 
-        M5.Display.println("url:");
-        M5.Display.println(url);
+        JsonArray items = doc["items"];
+
+        for (JsonObject item : items) {
+            const char* title = item["title"];
+            M5.Display.println(title);
+            services::ai::speech(title);
+        }
     }
 }; // namespace services::feed
