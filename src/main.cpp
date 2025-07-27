@@ -1,6 +1,5 @@
 #include <M5Unified.h>
 #include <Rss.hpp>
-#include <WebServer.h>
 
 #include "env/runtime.hpp"
 #include "monitor/influx.hpp"
