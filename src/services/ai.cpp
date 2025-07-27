@@ -6,7 +6,7 @@
 
 #include "env/vars.hpp"
 
-namespace app::ai {
+namespace services::ai {
     void speech(const String &text) {
         HTTPClient http;
 
@@ -50,4 +50,4 @@ namespace app::ai {
         }
         return;
     }
-}; // namespace app::ai
+}; // namespace services::ai
