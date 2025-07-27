@@ -3,4 +3,5 @@
 
 namespace services::ai {
     void speech(const String &text);
+    String chat(const String &text);
 }; // namespace services::ai

@@ -3,6 +3,7 @@
 #include <HTTPClient.h>
 #include <M5Unified.h>
 #include <SPIFFS.h>
+#include <ArduinoJson.h>
 
 #include "env/vars.hpp"
 
@@ -49,5 +50,42 @@ namespace services::ai {
             M5.Lcd.println("Failed to remove file");
         }
         return;
+    }
+
+    String chat(const String &text) {
+        HTTPClient http;
+
+        http.begin("https://api.openai.com/v1/chat/completions");
+        http.addHeader("Authorization", "Bearer " + String(env::vars::OPENAI_APIKEY));
+        http.addHeader("Content-Type", "application/json");
+
+        JsonDocument reqbody;
+        reqbody["model"] = "gpt-4.1";
+
+        JsonArray messages = reqbody.createNestedArray("messages");
+        JsonObject msg = messages.createNestedObject();
+        msg["role"] = "user";
+        msg["content"] = text;
+
+        String reqbodystr;
+        serializeJson(reqbody, reqbodystr);
+
+        int status = http.POST(reqbodystr);
+        if (status != 200) {
+            return "";
+        }
+        http.end();
+
+        String resbodystr = http.getString();
+
+        JsonDocument resbody;
+        DeserializationError error = deserializeJson(resbody, resbodystr);
+        if (error) {
+            M5.Display.println("JSON parse error");
+            return "";
+        }
+        const char* content = resbody["choices"][0]["message"]["content"];
+
+        return content;
     }
 }; // namespace services::ai
