@@ -80,7 +80,7 @@ namespace services::ai {
             return "";
         }
         http.end();
-        M5.Display.println("httpok");
+        // M5.Display.println("httpok");
 
         String resbodystr = http.getString();
 

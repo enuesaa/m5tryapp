@@ -1,35 +1,20 @@
 #include "feed.hpp"
 #include "env/vars.hpp"
-#include "services/ai.hpp"
 #include <ArduinoJson.h>
-#include <HTTPClient.h>
 #include <M5Unified.h>
-#include <Rss.h>
+#include <Httpc.h>
 
 namespace services::feed {
     std::vector<String> parse() {
         std::vector<String> list;
 
-        HTTPClient http;
-        http.begin(env::vars::RSS_FEED_URI);
-
-        int code = http.GET();
-        if (code != 200) {
-            M5.Lcd.printf("HTTP Error: %d\n", code);
+        auto res = httpc::getj(env::vars::RSS_FEED_URI);
+        if (res.err == true) {
+            M5.Lcd.println("aHTTP Error");
+            M5.Lcd.println(res.status);
             return list;
         }
-        http.end();
-
-        String body = http.getString();
-
-        JsonDocument doc;
-        DeserializationError error = deserializeJson(doc, body);
-
-        if (error) {
-            M5.Display.println("JSON parse error");
-            return list;
-        }
-        JsonArray items = doc["items"];
+        JsonArray items = res.data["items"];
 
         for (JsonObject item : items) {
             String title = item["title"];
