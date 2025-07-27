@@ -4,6 +4,7 @@
 #include "env/runtime.hpp"
 #include "monitor/influx.hpp"
 #include "utils/timer.hpp"
+#include "services/feed.hpp"
 
 namespace influx = monitor::influx;
 namespace timer = utils::timer;
@@ -15,6 +16,8 @@ void setup() {
         return;
     }
     influx::putLog("connected");
+
+    services::feed::parse();
 }
 
 timer::Timer metricTimer(10000); // 10秒
