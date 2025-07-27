@@ -28,12 +28,18 @@ namespace services::feed {
             return;
         }
 
+        String input = "最新の AWS NEWS なんだけど、ざっくり日本語でまとめて。";
         JsonArray items = doc["items"];
 
         for (JsonObject item : items) {
             const char* title = item["title"];
-            M5.Display.println(title);
-            services::ai::speech(title);
+            input = input + title + "\n";
         }
+
+        String output = services::ai::chat(input);
+        M5.Display.println(output);
+        M5.Display.println("chat");
+
+        services::ai::speech(output);
     }
 }; // namespace services::feed

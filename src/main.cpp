@@ -4,7 +4,6 @@
 #include "env/runtime.hpp"
 #include "monitor/influx.hpp"
 #include "utils/timer.hpp"
-#include "services/ai.hpp"
 #include "services/feed.hpp"
 
 namespace influx = monitor::influx;
@@ -18,8 +17,7 @@ void setup() {
     }
     influx::putLog("connected");
 
-    String out = services::ai::chat("hello");
-    M5.Lcd.println(out);
+    services::feed::parse();
 }
 
 timer::Timer metricTimer(10000); // 10秒
