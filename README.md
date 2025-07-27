@@ -26,6 +26,11 @@ M5Stack の機種によってライブラリが異なっていたがそれを統
 - https://lang-ship.com/blog/work/m5unified-1/
 
 ## コマンド
+### test
+```bash
+pio test -vvv
+```
+
 ### format
 ```bash
 clang-format -i src/**/*.{cpp,hpp}

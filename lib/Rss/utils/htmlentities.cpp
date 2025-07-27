@@ -1,6 +1,6 @@
 #include "htmlentities.hpp"
 
-namespace utils::htmlentities {
+namespace rss::utils::htmlentities {
     String decode(const String &input) {
         String output;
         int len = input.length();

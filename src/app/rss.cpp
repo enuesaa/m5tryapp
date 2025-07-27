@@ -40,7 +40,7 @@ namespace app::rss {
             count += 1;
 
             String title = payload.substring(startIdx + tagStart.length(), endIdx);
-            app::ai::speech(utils::htmlentities::decode(title));
+            // app::ai::speech(utils::htmlentities::decode(title));
 
             cursor = endIdx + tagEnd.length();
 

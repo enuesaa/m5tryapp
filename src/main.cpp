@@ -2,7 +2,6 @@
 #include <Rss.hpp>
 #include <WebServer.h>
 
-#include "app/rss.hpp"
 #include "env/runtime.hpp"
 #include "monitor/influx.hpp"
 #include "utils/timer.hpp"
@@ -17,8 +16,6 @@ void setup() {
         return;
     }
     influx::putLog("connected");
-
-    app::rss::parse();
 }
 
 timer::Timer metricTimer(10000); // 10秒

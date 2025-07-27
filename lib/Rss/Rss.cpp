@@ -1,6 +1,7 @@
 #include "Rss.hpp"
 #include <HTTPClient.h>
 #include <M5Unified.h>
+#include "utils/htmlentities.hpp"
 
 namespace rss {
     String fetch(const String& url) {
@@ -36,6 +37,7 @@ namespace rss {
             }
 
             String title = body.substring(startIdx + tagStart.length(), endIdx);
+            title = utils::htmlentities::decode(title);
             list.push_back(title);
 
             cursor = endIdx + tagEnd.length();
