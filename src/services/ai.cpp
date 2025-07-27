@@ -1,9 +1,9 @@
 #include "ai.hpp"
 
+#include <ArduinoJson.h>
 #include <HTTPClient.h>
 #include <M5Unified.h>
 #include <SPIFFS.h>
-#include <ArduinoJson.h>
 
 #include "env/vars.hpp"
 
@@ -90,7 +90,7 @@ namespace services::ai {
             M5.Display.println("JSON parse error");
             return "";
         }
-        const char* content = resbody["choices"][0]["message"]["content"];
+        const char *content = resbody["choices"][0]["message"]["content"];
 
         return content;
     }

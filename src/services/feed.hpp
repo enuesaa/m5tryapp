@@ -4,5 +4,5 @@
 #include <vector>
 
 namespace services::feed {
-    void parse();
+    std::vector<String> parse();
 }; // namespace services::feed
