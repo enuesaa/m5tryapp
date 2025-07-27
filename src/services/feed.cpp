@@ -28,18 +28,16 @@ namespace services::feed {
             return;
         }
 
-        String input = "最新の AWS NEWS なんだけど、ざっくり日本語でまとめて。";
+        String inputheader = "この AWS NEWS を日本語で20文字程度にまとめて。不要な文言は出力しないで。";
         JsonArray items = doc["items"];
 
         for (JsonObject item : items) {
             const char* title = item["title"];
-            input = input + title + "\n";
+            const char* description = item["description"];
+            String input = inputheader + title + ".\n" + description;
+            String output = services::ai::chat(input);
+            M5.Display.println(output);
+            services::ai::speech(output);
         }
-
-        String output = services::ai::chat(input);
-        M5.Display.println(output);
-        M5.Display.println("chat");
-
-        services::ai::speech(output);
     }
 }; // namespace services::feed

@@ -19,6 +19,8 @@ namespace services::ai {
 
         int status = http.POST(payload);
         if (status != 200) {
+            M5.Display.println("status");
+            M5.Display.println(status);
             return;
         }
         File file = SPIFFS.open("/speech.wav", FILE_WRITE);
@@ -42,9 +44,10 @@ namespace services::ai {
 
         M5.Speaker.playWav(buf, size);
 
-        while (M5.Speaker.isPlaying()) {
-            delay(1);
-        }
+        // while (M5.Speaker.isPlaying()) {
+        //     delay(1);
+        // }
+        delay(3);
 
         if (!SPIFFS.remove("/speech.wav")) {
             M5.Lcd.println("Failed to remove file");
@@ -72,6 +75,8 @@ namespace services::ai {
 
         int status = http.POST(reqbodystr);
         if (status != 200) {
+            M5.Display.println("status");
+            M5.Display.println(status);
             return "";
         }
         http.end();
