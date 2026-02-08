@@ -11,7 +11,6 @@ M5Stack Cores3 でいろいろするリポジトリ
 ## 開発方法
 VS Code に [PlatformIO extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) を入れて開発する
 
-### 手順
 1. VS Code に [PlatformIO extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) をインストールする
 2. VS Code でこのリポジトリを開く  
   ---> PlatformIO が立ち上がるはず
