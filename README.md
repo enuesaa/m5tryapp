@@ -1,13 +1,17 @@
 # m5tryapp
 
-M5Stack Cores3 で何か色々するリポジトリ
+M5Stack Cores3 でいろいろするリポジトリ
 
 [![ci](https://github.com/enuesaa/m5tryapp/actions/workflows/ci.yml/badge.svg)](https://github.com/enuesaa/m5tryapp/actions/workflows/ci.yml)
+
+## 実装内容
+
+とりあえず AWS News を取得して、画面に表示したり、AIに投げて読み上げてもらってる。
 
 ## 開発方法
 VS Code に [PlatformIO extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) を入れて開発する
 
-### ステップ
+### 手順
 1. VS Code に [PlatformIO extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide) をインストールする
 2. VS Code でこのリポジトリを開く  
   ---> PlatformIO が立ち上がるはず
